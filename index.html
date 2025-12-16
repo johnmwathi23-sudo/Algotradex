@@ -9,6 +9,7 @@
     <link rel="stylesheet" media="all" href="./css/slick.css">
     <link rel="stylesheet" media="all" href="./css/slick-theme.css">
     <link rel="stylesheet" media="all" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Custom Overrides for Algotradex */
         :root {
@@ -450,6 +451,72 @@
                 transform: scale(1);
             }
         }
+
+        .master-class-sec {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #121212 0%, #1a1a1a 100%);
+        }
+
+        /* Decorative background elements */
+        .master-class-sec::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--primary-color);
+            filter: blur(100px);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .master-class-sec::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--primary-color);
+            filter: blur(100px);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .master-class-card {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(23, 189, 49, 0.3);
+            border-radius: 15px;
+            padding: 50px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .master-class-val {
+            border-right: 1px solid var(--border-color);
+        }
+
+        .master-class-val:last-child {
+            border-right: none;
+        }
+
+        @media (max-width: 768px) {
+            .master-class-val {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+
+            .master-class-val:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+        }
     </style>
 </head>
 
@@ -474,7 +541,7 @@
                         <option value="ZAR">ZAR (R)</option>
                         <option value="NGN">NGN (₦)</option>
                     </select>
-                    <span class="theme-toggle" onclick="toggleTheme()" id="themeIcon">☀️</span>
+                    <span class="theme-toggle" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-sun"></i></span>
                     <a href="https://wa.me/254759777222" class="btn btnlightblue d-inline-block">Order Now</a>
                 </div>
             </div>
@@ -516,7 +583,7 @@
                 <!-- Feature 1 -->
                 <div class="col-md-4 text-center mb-4">
                     <div class="feature-card">
-                        <div class="icon-box">🚀</div>
+                        <div class="icon-box"><i class="fas fa-rocket"></i></div>
                         <h4 class="text-white mt-3">High Precision</h4>
                         <p class="text-gray">Our bots execute trades with millisecond latency to catch the best prices
                             and maximize your profit potential.</p>
@@ -525,7 +592,7 @@
                 <!-- Feature 2 -->
                 <div class="col-md-4 text-center mb-4">
                     <div class="feature-card">
-                        <div class="icon-box">🛡️</div>
+                        <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
                         <h4 class="text-white mt-3">Risk Management</h4>
                         <p class="text-gray">Built-in stop loss, equity protection, and news filters to safeguard your
                             capital during volatile markets.</p>
@@ -534,7 +601,7 @@
                 <!-- Feature 3 -->
                 <div class="col-md-4 text-center mb-4">
                     <div class="feature-card">
-                        <div class="icon-box">📈</div>
+                        <div class="icon-box"><i class="fas fa-chart-line"></i></div>
                         <h4 class="text-white mt-3">Proven Strategies</h4>
                         <p class="text-gray">Backtested on years of historical data to ensure consistency across
                             multiple market conditions.</p>
@@ -565,9 +632,12 @@
                         powerful automated tools.
                     </p>
                     <ul class="feature-list textgraycolor">
-                        <li><strong>⚡ Automated Execution:</strong> No human emotion, just pure logic.</li>
-                        <li><strong>🌍 Multi-Currency:</strong> Optimized for major pairs, indices, and crypto.</li>
-                        <li><strong>🔧 Easy Setup:</strong> Plug and play on MT4/MT5 in minutes.</li>
+                        <li><strong><i class="fas fa-bolt"></i> Automated Execution:</strong> No human emotion, just
+                            pure logic.</li>
+                        <li><strong><i class="fas fa-globe"></i> Multi-Currency:</strong> Optimized for major pairs,
+                            indices, and crypto.</li>
+                        <li><strong><i class="fas fa-tools"></i> Easy Setup:</strong> Plug and play on MT4/MT5 in
+                            minutes.</li>
                     </ul>
                     <a href="#showcase" class="btn btnlightblue mt-3">View Bots</a>
                 </div>
@@ -674,6 +744,52 @@
         </div>
     </div>
 
+    <!-- Master Class Section -->
+    <div class="master-class-sec mt-5 pb-5 pt-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="master-class-card text-center">
+                        <span class="badge mb-3"
+                            style="background-color: var(--primary-color); color: white; padding: 10px 20px; font-size: 14px;">Limited
+                            Spots Available</span>
+                        <h2 class="headingWh mb-4">Join Our Exclusive Trading Master Class</h2>
+                        <p class="textgraycolor mb-5" style="font-size: 18px; max-width: 700px; margin: 0 auto;">
+                            Stop gambling and start trading. Learn the secrets of algorithmic trading, strategy
+                            automation, and risk management from the experts at Algotradex.
+                        </p>
+
+                        <div class="row mb-5">
+                            <div class="col-md-4 master-class-val">
+                                <span style="font-size: 30px; color: var(--primary-color);"><i
+                                        class="fas fa-graduation-cap"></i></span>
+                                <h4 class="text-white mt-2">Zero to Hero</h4>
+                                <p class="text-gray small">From basics to advanced concepts.</p>
+                            </div>
+                            <div class="col-md-4 master-class-val">
+                                <span style="font-size: 30px; color: var(--primary-color);"><i
+                                        class="fas fa-cogs"></i></span>
+                                <h4 class="text-white mt-2">Strategy Building</h4>
+                                <p class="text-gray small">Create your own winning strategies.</p>
+                            </div>
+                            <div class="col-md-4 master-class-val">
+                                <span style="font-size: 30px; color: var(--primary-color);"><i
+                                        class="fas fa-user-tie"></i></span>
+                                <h4 class="text-white mt-2">Mentorship</h4>
+                                <p class="text-gray small">One-on-one guidance & support.</p>
+                            </div>
+                        </div>
+
+                        <a href="https://wa.me/254759777222?text=Hello%2C%20I%20would%20like%20to%20register%20for%20the%20Algotradex%20Master%20Class%20sessions."
+                            class="btn btnlightblue btn-lg px-5 py-3" style="font-weight: bold; font-size: 18px;">
+                            Register via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -696,7 +812,7 @@
             <span class="close-modal" onclick="closeBotModal()">&times;</span>
             <div class="modal-body">
                 <div class="modal-bot-image">
-                    <span style="font-size: 60px;">🤖</span>
+                    <span style="font-size: 60px; color: var(--text-secondary);"><i class="fas fa-robot"></i></span>
                 </div>
                 <h2 id="modalBotName" class="text-white mb-2">Bot Name</h2>
                 <h4 id="modalBotSubtitle" class="textbluecolor mb-4">Subtitle</h4>
@@ -899,62 +1015,62 @@
         // Initial Data (Default Bots)
         const defaultBots = [
             // Latest / New
-            { id: 1, name: 'TrendMaster X1', subtitle: 'Gold Scalper', desc: 'A high-frequency trend following bot optimized for XAUUSD. Low drawdown and high precision entries.', category: 'latest', price: 150, image: '', emoji: '📈' },
-            { id: 6, name: 'CryptoHunter V2', subtitle: 'BTC/ETH Scalper', desc: 'Aggressive scalping algorithm for major crypto pairs. Works best on 5m timeframe.', category: 'latest', price: 200, image: '', emoji: '₿' },
-            { id: 7, name: 'NewsFeeder AI', subtitle: 'Event Trading', desc: 'Automatically trades high-impact news events using volatility breakout logic.', category: 'latest', price: 180, image: '', emoji: '📰' },
-            { id: 8, name: 'SafeGuard Equity', subtitle: 'Capital Preserver', desc: 'A conservative bot focused on account protection and slow, steady growth.', category: 'latest', price: 120, image: '', emoji: '�️' },
+            { id: 1, name: 'TrendMaster X1', subtitle: 'Gold Scalper', desc: 'A high-frequency trend following bot optimized for XAUUSD. Low drawdown and high precision entries.', category: 'latest', price: 150, image: '', icon: 'fas fa-chart-line' },
+            { id: 6, name: 'CryptoHunter V2', subtitle: 'BTC/ETH Scalper', desc: 'Aggressive scalping algorithm for major crypto pairs. Works best on 5m timeframe.', category: 'latest', price: 200, image: '', icon: 'fab fa-bitcoin' },
+            { id: 7, name: 'NewsFeeder AI', subtitle: 'Event Trading', desc: 'Automatically trades high-impact news events using volatility breakout logic.', category: 'latest', price: 180, image: '', icon: 'fas fa-newspaper' },
+            { id: 8, name: 'SafeGuard Equity', subtitle: 'Capital Preserver', desc: 'A conservative bot focused on account protection and slow, steady growth.', category: 'latest', price: 120, image: '', icon: 'fas fa-shield-alt' },
 
             // Popular / Trending
-            { id: 4, name: 'Volatility King', subtitle: 'Indices', desc: 'Thrives in volatile markets like NASDAQ and US30. Built to handle rapid price movements.', category: 'popular', price: 120, image: '', emoji: '🦁' },
-            { id: 9, name: 'US30 Destroyer', subtitle: 'Dow Jones Specialist', desc: 'Highly popular bot for trading the Dow Jones index during NY session.', category: 'popular', price: 140, image: '', emoji: '🇺🇸' },
-            { id: 10, name: 'ForexFury 5.0', subtitle: 'Major Pairs', desc: 'The classic Forex trading bot updated for modern market conditions. Good for EURUSD.', category: 'popular', price: 95, image: '', emoji: '🔥' },
-            { id: 11, name: 'GoldRush Elite', subtitle: 'XAUUSD Swing', desc: 'Captures large swing moves in Gold. Holds trades for days to maximize profit.', category: 'popular', price: 250, image: '', emoji: '💰' },
+            { id: 4, name: 'Volatility King', subtitle: 'Indices', desc: 'Thrives in volatile markets like NASDAQ and US30. Built to handle rapid price movements.', category: 'popular', price: 120, image: '', icon: 'fas fa-bolt' },
+            { id: 9, name: 'US30 Destroyer', subtitle: 'Dow Jones Specialist', desc: 'Highly popular bot for trading the Dow Jones index during NY session.', category: 'popular', price: 140, image: '', icon: 'fas fa-flag-usa' },
+            { id: 10, name: 'ForexFury 5.0', subtitle: 'Major Pairs', desc: 'The classic Forex trading bot updated for modern market conditions. Good for EURUSD.', category: 'popular', price: 95, image: '', icon: 'fas fa-fire' },
+            { id: 11, name: 'GoldRush Elite', subtitle: 'XAUUSD Swing', desc: 'Captures large swing moves in Gold. Holds trades for days to maximize profit.', category: 'popular', price: 250, image: '', icon: 'fas fa-coins' },
 
             // Premium
-            { id: 5, name: 'HedgeFund AI', subtitle: 'Multi-Asset', desc: 'Institutional grade hedging strategy for long term growth. Uses advanced correlation.', category: 'premium', price: 500, image: '', emoji: '�️' },
-            { id: 12, name: 'Quantum Solace', subtitle: 'Neural Network', desc: 'Deep learning model that adapts to changing market conditions in real-time.', category: 'premium', price: 800, image: '', emoji: '🧠' },
-            { id: 13, name: 'Institutional Flow', subtitle: 'Order Block', desc: 'Tracks smart money concepts and order blocks to enter with the banks.', category: 'premium', price: 450, image: '', emoji: '🏦' },
+            { id: 5, name: 'HedgeFund AI', subtitle: 'Multi-Asset', desc: 'Institutional grade hedging strategy for long term growth. Uses advanced correlation.', category: 'premium', price: 500, image: '', icon: 'fas fa-building' },
+            { id: 12, name: 'Quantum Solace', subtitle: 'Neural Network', desc: 'Deep learning model that adapts to changing market conditions in real-time.', category: 'premium', price: 800, image: '', icon: 'fas fa-brain' },
+            { id: 13, name: 'Institutional Flow', subtitle: 'Order Block', desc: 'Tracks smart money concepts and order blocks to enter with the banks.', category: 'premium', price: 450, image: '', icon: 'fas fa-university' },
 
             // Pine Scripts (TradingView)
-            { id: 14, name: 'TV Divergence Pro', subtitle: 'RSI/MACD', desc: 'Custom Pine Script indicator that detects hidden divergences automatically.', category: 'pine', price: 50, image: '', emoji: '🌲' },
-            { id: 15, name: 'Liquidity Grabber', subtitle: 'SMC Indicator', desc: 'Highlights liquidity pools and potential reversal zones on TradingView charts.', category: 'pine', price: 75, image: '', emoji: '💧' },
-            { id: 16, name: 'Harmonic Scanner', subtitle: 'Pattern Recognition', desc: 'Auto-detects Gartley, Butterfly, and Bat patterns with high accuracy.', category: 'pine', price: 60, image: '', emoji: '🦋' },
-            { id: 21, name: 'Trend Line Breakout', subtitle: 'Auto-Drawer', desc: 'Automatically draws and trades trend line breakouts on TradingView.', category: 'pine', price: 45, image: '', emoji: '📉' },
-            { id: 22, name: 'Volume Profile VR', subtitle: 'Volume Analysis', desc: 'Advanced volume profile fixed range indicator with buy/sell signals.', category: 'pine', price: 55, image: '', emoji: '📊' },
-            { id: 23, name: 'Fibonacci Auto-Retrace', subtitle: 'Fib Levels', desc: 'Auto-plots Fib retracement levels and signals entries at 61.8% golden zone.', category: 'pine', price: 40, image: '', emoji: '🔢' },
+            { id: 14, name: 'TV Divergence Pro', subtitle: 'RSI/MACD', desc: 'Custom Pine Script indicator that detects hidden divergences automatically.', category: 'pine', price: 50, image: '', icon: 'fas fa-tree' },
+            { id: 15, name: 'Liquidity Grabber', subtitle: 'SMC Indicator', desc: 'Highlights liquidity pools and potential reversal zones on TradingView charts.', category: 'pine', price: 75, image: '', icon: 'fas fa-tint' },
+            { id: 16, name: 'Harmonic Scanner', subtitle: 'Pattern Recognition', desc: 'Auto-detects Gartley, Butterfly, and Bat patterns with high accuracy.', category: 'pine', price: 60, image: '', icon: 'fas fa-gem' },
+            { id: 21, name: 'Trend Line Breakout', subtitle: 'Auto-Drawer', desc: 'Automatically draws and trades trend line breakouts on TradingView.', category: 'pine', price: 45, image: '', icon: 'fas fa-pencil-ruler' },
+            { id: 22, name: 'Volume Profile VR', subtitle: 'Volume Analysis', desc: 'Advanced volume profile fixed range indicator with buy/sell signals.', category: 'pine', price: 55, image: '', icon: 'fas fa-chart-bar' },
+            { id: 23, name: 'Fibonacci Auto-Retrace', subtitle: 'Fib Levels', desc: 'Auto-plots Fib retracement levels and signals entries at 61.8% golden zone.', category: 'pine', price: 40, image: '', icon: 'fas fa-sort-numeric-down' },
 
             // EA MT4
-            { id: 2, name: 'PipHunter Pro', subtitle: 'Currency Pairs', desc: 'Steady growth EA designed for major currency pairs (EURUSD, GBPUSD).', category: 'eamt4', price: 99, image: '', emoji: '🎯' },
-            { id: 17, name: 'GridMaster MT4', subtitle: 'Grid Strategy', desc: 'Advanced grid trading system with dynamic spacing and equity stop loss.', category: 'eamt4', price: 85, image: '', emoji: '🔢' },
-            { id: 18, name: 'Breakout Ranger', subtitle: 'London Session', desc: 'Trades the London open breakout range. Simple yet effective for GBP pairs.', category: 'eamt4', price: 110, image: '', emoji: '🇬🇧' },
-            { id: 24, name: 'Moving Average Cross', subtitle: 'Trend Filter', desc: 'Classic MACD and MA crossover strategy with trailing stop features.', category: 'eamt4', price: 70, image: '', emoji: '❌' },
-            { id: 25, name: 'Scalper X2', subtitle: 'M1 Scalping', desc: 'Aggressive scalper for EURUSD M1 chart. Requires low spread broker.', category: 'eamt4', price: 130, image: '', emoji: '⚡' },
-            { id: 26, name: 'News Straddle EA', subtitle: 'News Events', desc: 'Places pending orders before major news releases to catch the spike.', category: 'eamt4', price: 150, image: '', emoji: '📰' },
+            { id: 2, name: 'PipHunter Pro', subtitle: 'Currency Pairs', desc: 'Steady growth EA designed for major currency pairs (EURUSD, GBPUSD).', category: 'eamt4', price: 99, image: '', icon: 'fas fa-bullseye' },
+            { id: 17, name: 'GridMaster MT4', subtitle: 'Grid Strategy', desc: 'Advanced grid trading system with dynamic spacing and equity stop loss.', category: 'eamt4', price: 85, image: '', icon: 'fas fa-th' },
+            { id: 18, name: 'Breakout Ranger', subtitle: 'London Session', desc: 'Trades the London open breakout range. Simple yet effective for GBP pairs.', category: 'eamt4', price: 110, image: '', icon: 'fas fa-clock' },
+            { id: 24, name: 'Moving Average Cross', subtitle: 'Trend Filter', desc: 'Classic MACD and MA crossover strategy with trailing stop features.', category: 'eamt4', price: 70, image: '', icon: 'fas fa-exchange-alt' },
+            { id: 25, name: 'Scalper X2', subtitle: 'M1 Scalping', desc: 'Aggressive scalper for EURUSD M1 chart. Requires low spread broker.', category: 'eamt4', price: 130, image: '', icon: 'fas fa-stopwatch' },
+            { id: 26, name: 'News Straddle EA', subtitle: 'News Events', desc: 'Places pending orders before major news releases to catch the spike.', category: 'eamt4', price: 150, image: '', icon: 'fas fa-rss' },
 
             // EA MT5
-            { id: 3, name: 'AlgoSniper v3', subtitle: 'Price Action', desc: 'Sniper entries based on support and resistance levels. High accuracy.', category: 'eamt5', price: 250, image: '', emoji: '🔭' },
-            { id: 19, name: 'MultiFrame logic', subtitle: 'Trend Filter', desc: 'Checks 3 timeframes before entering a trade to ensure trend alignment.', category: 'eamt5', price: 160, image: '', emoji: '🕰️' },
-            { id: 20, name: 'Arbitrage Spy', subtitle: 'Latency Arb', desc: 'Exploits price differences between feeds. Requires low latency VPS.', category: 'eamt5', price: 300, image: '', emoji: '🕵️' },
-            { id: 27, name: 'DeepLearning FX', subtitle: 'AI Powered', desc: 'Uses Python-bridge to run TensorFlow models for trade decisions on MT5.', category: 'eamt5', price: 400, image: '', emoji: '🤖' },
-            { id: 28, name: 'Renko Street V5', subtitle: 'Renko Charts', desc: 'optimized for Renko charts on MT5. smooths out noise for clear trends.', category: 'eamt5', price: 180, image: '', emoji: '🧱' },
-            { id: 29, name: 'CopyTrader Enterprise', subtitle: 'Social Trading', desc: 'Advanced local trade copier with risk scaling and symbol mapping.', category: 'eamt5', price: 200, image: '', emoji: '📋' },
+            { id: 3, name: 'AlgoSniper v3', subtitle: 'Price Action', desc: 'Sniper entries based on support and resistance levels. High accuracy.', category: 'eamt5', price: 250, image: '', icon: 'fas fa-crosshairs' },
+            { id: 19, name: 'MultiFrame logic', subtitle: 'Trend Filter', desc: 'Checks 3 timeframes before entering a trade to ensure trend alignment.', category: 'eamt5', price: 160, image: '', icon: 'fas fa-layer-group' },
+            { id: 20, name: 'Arbitrage Spy', subtitle: 'Latency Arb', desc: 'Exploits price differences between feeds. Requires low latency VPS.', category: 'eamt5', price: 300, image: '', icon: 'fas fa-user-secret' },
+            { id: 27, name: 'DeepLearning FX', subtitle: 'AI Powered', desc: 'Uses Python-bridge to run TensorFlow models for trade decisions on MT5.', category: 'eamt5', price: 400, image: '', icon: 'fas fa-microchip' },
+            { id: 28, name: 'Renko Street V5', subtitle: 'Renko Charts', desc: 'optimized for Renko charts on MT5. smooths out noise for clear trends.', category: 'eamt5', price: 180, image: '', icon: 'fas fa-cubes' },
+            { id: 29, name: 'CopyTrader Enterprise', subtitle: 'Social Trading', desc: 'Advanced local trade copier with risk scaling and symbol mapping.', category: 'eamt5', price: 200, image: '', icon: 'fas fa-copy' },
 
             // More Latest
-            { id: 30, name: 'Alpha Generator', subtitle: 'Momentum', desc: 'Captures early momentum shifts in emerging crypto assets.', category: 'latest', price: 135, image: '', emoji: '🅰️' },
-            { id: 31, name: 'Beta Neutral', subtitle: 'Market Neutral', desc: 'Simultaneously buys and sells correlated assets to harvest risk premium.', category: 'latest', price: 210, image: '', emoji: '⚖️' },
-            { id: 32, name: 'Gamma Scalp', subtitle: 'Options Style', desc: 'Mimics gamma scalping strategies using spot forex positions.', category: 'latest', price: 190, image: '', emoji: '〰️' },
+            { id: 30, name: 'Alpha Generator', subtitle: 'Momentum', desc: 'Captures early momentum shifts in emerging crypto assets.', category: 'latest', price: 135, image: '', icon: 'fas fa-atom' },
+            { id: 31, name: 'Beta Neutral', subtitle: 'Market Neutral', desc: 'Simultaneously buys and sells correlated assets to harvest risk premium.', category: 'latest', price: 210, image: '', icon: 'fas fa-balance-scale' },
+            { id: 32, name: 'Gamma Scalp', subtitle: 'Options Style', desc: 'Mimics gamma scalping strategies using spot forex positions.', category: 'latest', price: 190, image: '', icon: 'fas fa-wave-square' },
 
             // More Popular
-            { id: 33, name: 'Titanium Trend', subtitle: 'Long Term', desc: 'Extremely slow, high win-rate strategy for swing trading daily charts.', category: 'popular', price: 299, image: '', emoji: '🛡️' },
-            { id: 34, name: 'Atlas A2', subtitle: 'Global Macro', desc: 'Trades based on currency strength meter differentials.', category: 'popular', price: 145, image: '', emoji: '🌍' },
-            { id: 35, name: 'Phoenix Rebirth', subtitle: 'Recovery', desc: 'Specialized recovery EA to manage and close losing drawdowns.', category: 'popular', price: 350, image: '', emoji: '🔥' },
+            { id: 33, name: 'Titanium Trend', subtitle: 'Long Term', desc: 'Extremely slow, high win-rate strategy for swing trading daily charts.', category: 'popular', price: 299, image: '', icon: 'fas fa-shield-virus' },
+            { id: 34, name: 'Atlas A2', subtitle: 'Global Macro', desc: 'Trades based on currency strength meter differentials.', category: 'popular', price: 145, image: '', icon: 'fas fa-globe-americas' },
+            { id: 35, name: 'Phoenix Rebirth', subtitle: 'Recovery', desc: 'Specialized recovery EA to manage and close losing drawdowns.', category: 'popular', price: 350, image: '', icon: 'fas fa-phoenix-framework' },
 
             // More Premium
-            { id: 36, name: 'Spartan Elite', subtitle: 'High Risk/Reward', desc: 'Aggressive compounding strategy for small accounts looking to flip.', category: 'premium', price: 600, image: '', emoji: '⚔️' },
-            { id: 37, name: 'Viking Raid', subtitle: 'Breakout', desc: 'Trades volatility expansions during the European open.', category: 'premium', price: 550, image: '', emoji: '🪓' },
-            { id: 38, name: 'Samurai Katana', subtitle: 'Precision', desc: 'Slices through noise to find the perfect entry. ultra low drawdown.', category: 'premium', price: 700, image: '', emoji: '🗾' },
-            { id: 39, name: 'Galactic Profit', subtitle: 'Universal', desc: 'Works on any pair, any timeframe. The ultimate generalist bot.', category: 'premium', price: 900, image: '', emoji: '🌌' },
-            { id: 40, name: 'Nebula Neuro', subtitle: 'Self-Learning', desc: 'Continually retrains itself based on last week\'s market data.', category: 'premium', price: 1200, image: '', emoji: '🧠' }
+            { id: 36, name: 'Spartan Elite', subtitle: 'High Risk/Reward', desc: 'Aggressive compounding strategy for small accounts looking to flip.', category: 'premium', price: 600, image: '', icon: 'fas fa-fighter-jet' },
+            { id: 37, name: 'Viking Raid', subtitle: 'Breakout', desc: 'Trades volatility expansions during the European open.', category: 'premium', price: 550, image: '', icon: 'fas fa-gavel' },
+            { id: 38, name: 'Samurai Katana', subtitle: 'Precision', desc: 'Slices through noise to find the perfect entry. ultra low drawdown.', category: 'premium', price: 700, image: '', icon: 'fas fa-khanda' },
+            { id: 39, name: 'Galactic Profit', subtitle: 'Universal', desc: 'Works on any pair, any timeframe. The ultimate generalist bot.', category: 'premium', price: 900, image: '', icon: 'fas fa-space-shuttle' },
+            { id: 40, name: 'Nebula Neuro', subtitle: 'Self-Learning', desc: 'Continually retrains itself based on last week\'s market data.', category: 'premium', price: 1200, image: '', icon: 'fas fa-project-diagram' }
         ];
 
         // Application State
@@ -1032,9 +1148,9 @@
         function updateThemeIcon(isLight) {
             const icon = document.getElementById('themeIcon');
             if (isLight) {
-                icon.innerText = '🌑'; // Moon for switching to dark
+                icon.innerHTML = '<i class="fas fa-moon"></i>';
             } else {
-                icon.innerText = '☀️'; // Sun for switching to light
+                icon.innerHTML = '<i class="fas fa-sun"></i>';
             }
         }
 
@@ -1045,8 +1161,13 @@
                 // Merge default bots that are missing in storage (for demo updates)
                 let added = false;
                 defaultBots.forEach(dBot => {
-                    if (!bots.find(b => b.id === dBot.id)) {
+                    const existing = bots.find(b => b.id === dBot.id);
+                    if (!existing) {
                         bots.push(dBot);
+                        added = true;
+                    } else if (!existing.icon && !existing.image) {
+                        // Migration: Add icon if missing and no image
+                        existing.icon = dBot.icon;
                         added = true;
                     }
                 });
@@ -1071,7 +1192,7 @@
         function saveBotsToStorage() {
             localStorage.setItem('algotradex_bots', JSON.stringify(bots));
             renderPublicBots();
-            // Check if admin dashboard is visible to avoid errors if element check is simple
+            // Check if admin dashboard is visible
             const adminView = document.getElementById('admin-dashboard-view');
             if (adminView && adminView.style.display === 'block') {
                 renderAdminBots();
@@ -1115,12 +1236,12 @@
         }
 
         function createBotCard(bot) {
-            // Handle image rendering: prefer base64 image, fallback to emoji
+            // Handle image rendering: prefer base64 image, fallback to icon
             let imageHtml = '';
             if (bot.image && bot.image.length > 0) {
                 imageHtml = `<img src="${bot.image}" alt="${bot.name}" style="width:100%; height:100%; object-fit:cover;">`;
             } else {
-                imageHtml = `<span class="placeholder-bot-img">${bot.emoji || '🤖'}</span>`;
+                imageHtml = `<span class="placeholder-bot-img"><i class="${bot.icon || 'fas fa-robot'}"></i></span>`;
             }
 
             // Escaping strings for onclick to avoid breaking JS
@@ -1161,7 +1282,7 @@
             if (bot.image && bot.image.length > 0) {
                 imgContainer.innerHTML = `<img src="${bot.image}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">`;
             } else {
-                imgContainer.innerHTML = `<span style="font-size: 60px;">${bot.emoji || '🤖'}</span>`;
+                imgContainer.innerHTML = `<span style="font-size: 60px; color: var(--text-secondary);"><i class="${bot.icon || 'fas fa-robot'}"></i></span>`;
             }
 
             // WhatsApp Message Logic
@@ -1190,8 +1311,6 @@
 
         function showAdminLogin() {
             document.getElementById('admin-overlay').style.display = 'block';
-            // If already logged in state (mock), just show dashboard
-            // But for now always show login for security simulation
             document.getElementById('admin-login-form').style.display = 'block';
             document.getElementById('admin-dashboard-view').style.display = 'none';
         }
@@ -1258,7 +1377,7 @@
                 if (bot.image) {
                     thumb = `<img src="${bot.image}" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">`;
                 } else {
-                    thumb = `<span style="font-size:24px;">${bot.emoji || '🤖'}</span>`;
+                    thumb = `<span style="font-size:24px; color: #aaa;"><i class="${bot.icon || 'fas fa-robot'}"></i></span>`;
                 }
 
                 const row = `
@@ -1373,7 +1492,7 @@
                     price,
                     category,
                     image,
-                    emoji: '🤖' // Default emoji
+                    icon: 'fas fa-robot' // Default icon for new bots
                 };
                 bots.push(newBot);
             }
