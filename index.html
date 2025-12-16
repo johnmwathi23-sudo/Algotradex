@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Algotradex - Smart Trading Bots</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" media="all" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" media="all" href="./css/slick.css">
+    <link rel="stylesheet" media="all" href="./css/slick-theme.css">
+    <link rel="stylesheet" media="all" href="./css/style.css">
+    <style>
+        /* Custom Overrides for Algotradex */
+        :root {
+            /* Default Dark Theme */
+            --primary-color: #17BD31;
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --card-footer-bg: #151515;
+            /* Replaces bgdarkbluecolor */
+            --text-main: #FFFFFF;
+            --text-secondary: #B1BBD4;
+            --border-color: #333;
+            --input-bg: #333;
+        }
+
+        /* Light Theme Overrides */
+        body.light-theme {
+            --bg-color: #F4F4F4;
+            --card-bg: #FFFFFF;
+            --card-footer-bg: #EAEAEA;
+            --text-main: #1E1E1E;
+            --text-secondary: #555555;
+            --border-color: #DDD;
+            --input-bg: #FFF;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .themebgcolor {
+            background-color: var(--bg-color);
+        }
+
+        .textwhitecolor,
+        .text-white {
+            color: var(--text-main) !important;
+        }
+
+        .textgraycolor,
+        .text-gray,
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        .textbluecolor {
+            color: var(--primary-color) !important;
+        }
+
+        .btnlightblue {
+            background-color: var(--primary-color) !important;
+            border: none;
+            color: #fff;
+        }
+
+        .btnlightblue:hover {
+            background-color: #129a26 !important;
+            color: #fff;
+        }
+
+        /* Logo Text Style */
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--primary-color);
+        }
+
+        /* Hide unused elements from template if any remain class-based */
+        .loginWallet,
+        .searchform {
+            display: none !important;
+        }
+
+        /* Hero Section Tweaks */
+        .bannercnt h2 {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        /* Bot Card Tweaks */
+        .aboutitem {
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .aboutitem:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .aboutitemImg {
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.2);
+            /* Semi-transparent compatible with both */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .bgdarkbluecolor {
+            background-color: var(--card-footer-bg) !important;
+        }
+
+        .aboutitemImg img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-bot-img {
+            font-size: 50px;
+            color: var(--text-secondary);
+        }
+
+        /* Modal Styles */
+        .bot-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .bot-modal-content {
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid var(--border-color);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+            color: var(--text-main);
+            box-shadow: 0 0 20px rgba(23, 189, 49, 0.2);
+        }
+
+        .close-modal {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-bot-image {
+            width: 100%;
+            height: 250px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            font-weight: bold;
+            width: 100%;
+            padding: 15px;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+        }
+
+        /* Admin Overlay */
+        #admin-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            padding: 40px;
+            color: #fff;
+            /* Always dark for admin for consistency */
+            overflow-y: auto;
+        }
+
+        .admin-login-box {
+            max-width: 400px;
+            margin: 100px auto;
+            background: #1E1E1E;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .admin-dashboard {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .admin-stat-card {
+            background: #1E1E1E;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Tabs Override */
+        .nav-tabs .nav-link {
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #fff !important;
+            background-color: var(--primary-color) !important;
+            border-radius: 50px;
+        }
+
+        .nav-tabs {
+            border-bottom: none;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 24px;
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            vertical-align: middle;
+            color: var(--text-main);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--primary-color);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--primary-color);
+        }
+
+        .currency-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 15px;
+            cursor: pointer;
+            height: 40px;
+            vertical-align: middle;
+        }
+
+        .currency-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .currency-select option {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body class="themebgcolor">
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-md-3">
+                    <div class="logo">
+                        <a href="index.html" class="logo-text">Algo<span>tradex</span></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-9 text-end">
+                    <!-- Mobile Menu Trigger replaced/simplified -->
+                    <select id="currencySelector" class="currency-select" onchange="changeCurrency(this.value)">
+                        <option value="USD">USD ($)</option>
+                        <option value="KES">KES (KSh)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="ZAR">ZAR (R)</option>
+                        <option value="NGN">NGN (₦)</option>
+                    </select>
+                    <span class="theme-toggle" onclick="toggleTheme()" id="themeIcon">☀️</span>
+                    <a href="https://wa.me/254759777222" class="btn btnlightblue d-inline-block">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="bannerSec">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="bannercnt">
+                        <h2 class="textwhitecolor">Smart Trading Bots. <br><span class="textbluecolor">Built for
+                                Precision.</span></h2>
+                        <p class="textgraycolor">Automate your trading strategies with our premium, back-tested Expert
+                            Advisors. Join the hive of profitable traders today.</p>
+                        <div class="bannerbtn">
+                            <a href="https://wa.me/254759777222" class="btn btnlightblue me-3">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <!-- Placeholder for Hero Image -->
+                    <img src="./img/trading_bot_hero.png" class="img-fluid" alt="Trading Bot Dashboard"
+                        style="opacity: 0.8; max-height: 400px; border-radius: 10px; box-shadow: 0 0 25px rgba(23, 189, 49, 0.4);">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bot Showcase Section -->
+    <div class="LastAddedItems mt-5 pt-3" id="showcase">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="headingWh mb-3">Our Trading Bots</h2>
+
+                    <!-- Categories -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all"
+                                type="button" role="tab" aria-controls="all" aria-selected="true">All</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="latest-tab" data-bs-toggle="tab" data-bs-target="#latest"
+                                type="button" role="tab" aria-controls="latest" aria-selected="false">Latest /
+                                New</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="popular-tab" data-bs-toggle="tab" data-bs-target="#popular"
+                                type="button" role="tab" aria-controls="popular" aria-selected="false">Popular /
+                                Trending</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="premium-tab" data-bs-toggle="tab" data-bs-target="#premium"
+                                type="button" role="tab" aria-controls="premium" aria-selected="false">Premium</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pine-tab" data-bs-toggle="tab" data-bs-target="#pine"
+                                type="button" role="tab" aria-controls="pine" aria-selected="false">Pine
+                                Scripts</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="eamt4-tab" data-bs-toggle="tab" data-bs-target="#eamt4"
+                                type="button" role="tab" aria-controls="eamt4" aria-selected="false">EA MT4</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="eamt5-tab" data-bs-toggle="tab" data-bs-target="#eamt5"
+                                type="button" role="tab" aria-controls="eamt5" aria-selected="false">EA MT5</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-4" id="myTabContent">
+
+                        <!-- All Bots -->
+                        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                            <div class="row" id="all-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Latest Bots -->
+                        <div class="tab-pane fade" id="latest" role="tabpanel" aria-labelledby="latest-tab">
+                            <div class="row" id="latest-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Popular Bots -->
+                        <div class="tab-pane fade" id="popular" role="tabpanel" aria-labelledby="popular-tab">
+                            <div class="row" id="popular-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Premium Bots -->
+                        <div class="tab-pane fade" id="premium" role="tabpanel" aria-labelledby="premium-tab">
+                            <div class="row" id="premium-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Pine Scripts -->
+                        <div class="tab-pane fade" id="pine" role="tabpanel" aria-labelledby="pine-tab">
+                            <div class="row" id="pine-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- EA MT4 -->
+                        <div class="tab-pane fade" id="eamt4" role="tabpanel" aria-labelledby="eamt4-tab">
+                            <div class="row" id="eamt4-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- EA MT5 -->
+                        <div class="tab-pane fade" id="eamt5" role="tabpanel" aria-labelledby="eamt5-tab">
+                            <div class="row" id="eamt5-bots-container">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3 class="logo-text mb-3">Algo<span>tradex</span></h3>
+                    <p class="textgraycolor mb-4">Empowering traders with automated intelligence.</p>
+                    <p>&copy; 2025 Algotradex. All rights reserved.</p>
+                    <div class="mt-4">
+                        <a href="#" onclick="showAdminLogin(); return false;" class="text-muted small">Admin Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bot Details Modal -->
+    <div id="botModal" class="bot-modal">
+        <div class="bot-modal-content">
+            <span class="close-modal" onclick="closeBotModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-bot-image">
+                    <span style="font-size: 60px;">🤖</span>
+                </div>
+                <h2 id="modalBotName" class="text-white mb-2">Bot Name</h2>
+                <h4 id="modalBotSubtitle" class="textbluecolor mb-4">Subtitle</h4>
+
+                <p class="text-gray mb-4" id="modalBotDesc">Full bot description goes here.</p>
+
+                <h5 class="text-white">Features:</h5>
+                <ul class="textgraycolor" id="modalBotFeatures">
+                    <li>Automated Stop Loss & Take Profit</li>
+                    <li>News Filter Integration</li>
+                    <li>Easy Installation</li>
+                    <li>24/7 Support</li>
+                </ul>
+
+                <div class="mt-4 mb-4 p-3"
+                    style="background: rgba(255, 193, 7, 0.1); border-left: 4px solid #ffc107; border-radius: 4px;">
+                    <h5 class="text-white mb-3" style="font-size: 16px;">⚠️ Important Notes Before Using This EA</h5>
+                    <div class="textgraycolor small">
+                        <p class="mb-2"><strong class="text-white">No trading system is guaranteed.</strong><br>This EA
+                            is designed for consistency and risk control, not gambling.</p>
+                        <p class="mb-2"><strong class="text-white">Losses are part of trading.</strong><br>Proper lot
+                            sizing and patience are required. Most users start small and scale.</p>
+                        <p class="mb-2"><strong class="text-white">This EA does not promise daily
+                                profits.</strong><br>It focuses on structured entries, not overtrading.</p>
+                        <p class="mb-0"><strong class="text-white">Results vary by discipline.</strong><br>Same EA, same
+                            settings — different results depending on user behavior.</p>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/254759777222" id="modalOrderBtn" class="whatsapp-btn" target="_blank">
+                    Order Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Overlay -->
+    <div id="admin-overlay">
+        <!-- Login Form -->
+        <div id="admin-login-form" class="admin-login-box">
+            <h3 class="text-center mb-4 text-white">Admin Access</h3>
+            <div class="mb-3">
+                <input type="text" id="adminUser" class="form-control" placeholder="Username"
+                    style="background:#333; border:none; color:#fff; padding:10px; width:100%; border-radius:5px; margin-bottom:10px;">
+                <input type="password" id="adminPass" class="form-control" placeholder="Password"
+                    style="background:#333; border:none; color:#fff; padding:10px; width:100%; border-radius:5px;">
+            </div>
+            <button onclick="checkAdminLogin()" class="btn btnlightblue w-100">Login</button>
+            <button onclick="hideAdminOverlay()" class="btn btn-link text-muted w-100 mt-2">Cancel</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="admin-dashboard-view" class="admin-dashboard">
+            <div class="admin-header">
+                <h2 class="text-white">Algotradex Admin</h2>
+                <div>
+                    <button onclick="showChangePasswordForm()" class="btn btn-outline-warning btn-sm me-2">Change
+                        Password</button>
+                    <button onclick="logoutAdmin()" class="btn btn-outline-danger btn-sm">Logout</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="admin-stat-card">
+                        <h4 class="text-gray">Total Visits</h4>
+                        <h2 class="text-white">1,245</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="admin-stat-card">
+                        <h4 class="text-gray">Bot Clicks</h4>
+                        <h2 class="text-white">856</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="admin-stat-card">
+                        <h4 class="text-gray">Active Bots</h4>
+                        <h2 class="text-white">12</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <!-- Bot List -->
+                <div class="col-12" id="admin-bot-list-view">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="text-white">Manage Bots</h3>
+                        <button onclick="showAddBotForm()" class="btn btnlightblue btn-sm">+ Add New Bot</button>
+                    </div>
+                    <div class="table-responsive" style="background: #1E1E1E; padding: 20px; border-radius: 8px;">
+                        <table class="table table-dark table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Subtitle</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-bot-table-body">
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Add/Edit Bot Form (Hidden by default) -->
+                <div class="col-12" id="admin-bot-form-view" style="display:none;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="text-white" id="form-title">Add New Bot</h3>
+                        <button onclick="cancelBotForm()" class="btn btn-outline-secondary btn-sm">Cancel</button>
+                    </div>
+
+                    <div style="background: #1E1E1E; padding: 30px; border-radius: 8px; border: 1px solid #333;">
+                        <form onsubmit="handleBotSubmit(event)">
+                            <input type="hidden" id="botId">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="text-gray mb-1">Bot Name</label>
+                                    <input type="text" id="botName"
+                                        class="form-control bg-dark text-white border-secondary" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="text-gray mb-1">Subtitle (e.g., Gold Scalper)</label>
+                                    <input type="text" id="botSubtitle"
+                                        class="form-control bg-dark text-white border-secondary" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="text-gray mb-1">Price ($)</label>
+                                <input type="number" id="botPrice"
+                                    class="form-control bg-dark text-white border-secondary" placeholder="Enter price"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="text-gray mb-1">Category</label>
+                                <select id="botCategory" class="form-control bg-dark text-white border-secondary">
+                                    <option value="latest">Latest / New</option>
+                                    <option value="popular">Popular / Trending</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="pine">Pine Scripts</option>
+                                    <option value="eamt4">EA MT4</option>
+                                    <option value="eamt5">EA MT5</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="text-gray mb-1">Description</label>
+                                <textarea id="botDesc" class="form-control bg-dark text-white border-secondary" rows="4"
+                                    required></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="text-gray mb-1">Cover Art (Image)</label>
+                                <input type="file" id="botImageInput"
+                                    class="form-control bg-dark text-white border-secondary" accept="image/*"
+                                    onchange="previewImage(this)">
+                                <div class="mt-2">
+                                    <img id="imagePreview" src=""
+                                        style="max-height: 150px; display: none; border-radius: 5px; border: 1px solid #444;">
+                                </div>
+                                <!-- Hidden field to store base64 -->
+                                <input type="hidden" id="botImageBase64">
+                            </div>
+
+                            <button type="submit" class="btn btnlightblue">Save Bot</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Overlay (Nested or separate) -->
+        <div id="admin-password-modal" class="admin-login-box"
+            style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10001; border:1px solid #17BD31;">
+            <h4 class="text-white mb-3">Change Password</h4>
+            <div class="mb-3">
+                <input type="password" id="oldPass" class="form-control" placeholder="Old Password"
+                    style="background:#333; border:none; color:#fff; mb-2">
+            </div>
+            <div class="mb-3">
+                <input type="password" id="newPass" class="form-control" placeholder="New Password"
+                    style="background:#333; border:none; color:#fff;">
+            </div>
+            <button onclick="saveNewPassword()" class="btn btnlightblue w-100 mb-2">Update Password</button>
+            <button onclick="closePasswordModal()" class="btn btn-link text-muted w-100">Cancel</button>
+        </div>
+    </div>
+
+    <script src="./js/jquery-2.0.0.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Initial Data (Default Bots)
+        const defaultBots = [
+            // Latest / New
+            { id: 1, name: 'TrendMaster X1', subtitle: 'Gold Scalper', desc: 'A high-frequency trend following bot optimized for XAUUSD. Low drawdown and high precision entries.', category: 'latest', price: 150, image: '', emoji: '📈' },
+            { id: 6, name: 'CryptoHunter V2', subtitle: 'BTC/ETH Scalper', desc: 'Aggressive scalping algorithm for major crypto pairs. Works best on 5m timeframe.', category: 'latest', price: 200, image: '', emoji: '₿' },
+            { id: 7, name: 'NewsFeeder AI', subtitle: 'Event Trading', desc: 'Automatically trades high-impact news events using volatility breakout logic.', category: 'latest', price: 180, image: '', emoji: '📰' },
+            { id: 8, name: 'SafeGuard Equity', subtitle: 'Capital Preserver', desc: 'A conservative bot focused on account protection and slow, steady growth.', category: 'latest', price: 120, image: '', emoji: '�️' },
+
+            // Popular / Trending
+            { id: 4, name: 'Volatility King', subtitle: 'Indices', desc: 'Thrives in volatile markets like NASDAQ and US30. Built to handle rapid price movements.', category: 'popular', price: 120, image: '', emoji: '🦁' },
+            { id: 9, name: 'US30 Destroyer', subtitle: 'Dow Jones Specialist', desc: 'Highly popular bot for trading the Dow Jones index during NY session.', category: 'popular', price: 140, image: '', emoji: '🇺🇸' },
+            { id: 10, name: 'ForexFury 5.0', subtitle: 'Major Pairs', desc: 'The classic Forex trading bot updated for modern market conditions. Good for EURUSD.', category: 'popular', price: 95, image: '', emoji: '🔥' },
+            { id: 11, name: 'GoldRush Elite', subtitle: 'XAUUSD Swing', desc: 'Captures large swing moves in Gold. Holds trades for days to maximize profit.', category: 'popular', price: 250, image: '', emoji: '💰' },
+
+            // Premium
+            { id: 5, name: 'HedgeFund AI', subtitle: 'Multi-Asset', desc: 'Institutional grade hedging strategy for long term growth. Uses advanced correlation.', category: 'premium', price: 500, image: '', emoji: '�️' },
+            { id: 12, name: 'Quantum Solace', subtitle: 'Neural Network', desc: 'Deep learning model that adapts to changing market conditions in real-time.', category: 'premium', price: 800, image: '', emoji: '🧠' },
+            { id: 13, name: 'Institutional Flow', subtitle: 'Order Block', desc: 'Tracks smart money concepts and order blocks to enter with the banks.', category: 'premium', price: 450, image: '', emoji: '🏦' },
+
+            // Pine Scripts (TradingView)
+            { id: 14, name: 'TV Divergence Pro', subtitle: 'RSI/MACD', desc: 'Custom Pine Script indicator that detects hidden divergences automatically.', category: 'pine', price: 50, image: '', emoji: '🌲' },
+            { id: 15, name: 'Liquidity Grabber', subtitle: 'SMC Indicator', desc: 'Highlights liquidity pools and potential reversal zones on TradingView charts.', category: 'pine', price: 75, image: '', emoji: '💧' },
+            { id: 16, name: 'Harmonic Scanner', subtitle: 'Pattern Recognition', desc: 'Auto-detects Gartley, Butterfly, and Bat patterns with high accuracy.', category: 'pine', price: 60, image: '', emoji: '🦋' },
+            { id: 21, name: 'Trend Line Breakout', subtitle: 'Auto-Drawer', desc: 'Automatically draws and trades trend line breakouts on TradingView.', category: 'pine', price: 45, image: '', emoji: '📉' },
+            { id: 22, name: 'Volume Profile VR', subtitle: 'Volume Analysis', desc: 'Advanced volume profile fixed range indicator with buy/sell signals.', category: 'pine', price: 55, image: '', emoji: '📊' },
+            { id: 23, name: 'Fibonacci Auto-Retrace', subtitle: 'Fib Levels', desc: 'Auto-plots Fib retracement levels and signals entries at 61.8% golden zone.', category: 'pine', price: 40, image: '', emoji: '🔢' },
+
+            // EA MT4
+            { id: 2, name: 'PipHunter Pro', subtitle: 'Currency Pairs', desc: 'Steady growth EA designed for major currency pairs (EURUSD, GBPUSD).', category: 'eamt4', price: 99, image: '', emoji: '🎯' },
+            { id: 17, name: 'GridMaster MT4', subtitle: 'Grid Strategy', desc: 'Advanced grid trading system with dynamic spacing and equity stop loss.', category: 'eamt4', price: 85, image: '', emoji: '🔢' },
+            { id: 18, name: 'Breakout Ranger', subtitle: 'London Session', desc: 'Trades the London open breakout range. Simple yet effective for GBP pairs.', category: 'eamt4', price: 110, image: '', emoji: '🇬🇧' },
+            { id: 24, name: 'Moving Average Cross', subtitle: 'Trend Filter', desc: 'Classic MACD and MA crossover strategy with trailing stop features.', category: 'eamt4', price: 70, image: '', emoji: '❌' },
+            { id: 25, name: 'Scalper X2', subtitle: 'M1 Scalping', desc: 'Aggressive scalper for EURUSD M1 chart. Requires low spread broker.', category: 'eamt4', price: 130, image: '', emoji: '⚡' },
+            { id: 26, name: 'News Straddle EA', subtitle: 'News Events', desc: 'Places pending orders before major news releases to catch the spike.', category: 'eamt4', price: 150, image: '', emoji: '📰' },
+
+            // EA MT5
+            { id: 3, name: 'AlgoSniper v3', subtitle: 'Price Action', desc: 'Sniper entries based on support and resistance levels. High accuracy.', category: 'eamt5', price: 250, image: '', emoji: '🔭' },
+            { id: 19, name: 'MultiFrame logic', subtitle: 'Trend Filter', desc: 'Checks 3 timeframes before entering a trade to ensure trend alignment.', category: 'eamt5', price: 160, image: '', emoji: '🕰️' },
+            { id: 20, name: 'Arbitrage Spy', subtitle: 'Latency Arb', desc: 'Exploits price differences between feeds. Requires low latency VPS.', category: 'eamt5', price: 300, image: '', emoji: '🕵️' },
+            { id: 27, name: 'DeepLearning FX', subtitle: 'AI Powered', desc: 'Uses Python-bridge to run TensorFlow models for trade decisions on MT5.', category: 'eamt5', price: 400, image: '', emoji: '🤖' },
+            { id: 28, name: 'Renko Street V5', subtitle: 'Renko Charts', desc: 'optimized for Renko charts on MT5. smooths out noise for clear trends.', category: 'eamt5', price: 180, image: '', emoji: '🧱' },
+            { id: 29, name: 'CopyTrader Enterprise', subtitle: 'Social Trading', desc: 'Advanced local trade copier with risk scaling and symbol mapping.', category: 'eamt5', price: 200, image: '', emoji: '📋' },
+
+            // More Latest
+            { id: 30, name: 'Alpha Generator', subtitle: 'Momentum', desc: 'Captures early momentum shifts in emerging crypto assets.', category: 'latest', price: 135, image: '', emoji: '🅰️' },
+            { id: 31, name: 'Beta Neutral', subtitle: 'Market Neutral', desc: 'Simultaneously buys and sells correlated assets to harvest risk premium.', category: 'latest', price: 210, image: '', emoji: '⚖️' },
+            { id: 32, name: 'Gamma Scalp', subtitle: 'Options Style', desc: 'Mimics gamma scalping strategies using spot forex positions.', category: 'latest', price: 190, image: '', emoji: '〰️' },
+
+            // More Popular
+            { id: 33, name: 'Titanium Trend', subtitle: 'Long Term', desc: 'Extremely slow, high win-rate strategy for swing trading daily charts.', category: 'popular', price: 299, image: '', emoji: '🛡️' },
+            { id: 34, name: 'Atlas A2', subtitle: 'Global Macro', desc: 'Trades based on currency strength meter differentials.', category: 'popular', price: 145, image: '', emoji: '🌍' },
+            { id: 35, name: 'Phoenix Rebirth', subtitle: 'Recovery', desc: 'Specialized recovery EA to manage and close losing drawdowns.', category: 'popular', price: 350, image: '', emoji: '🔥' },
+
+            // More Premium
+            { id: 36, name: 'Spartan Elite', subtitle: 'High Risk/Reward', desc: 'Aggressive compounding strategy for small accounts looking to flip.', category: 'premium', price: 600, image: '', emoji: '⚔️' },
+            { id: 37, name: 'Viking Raid', subtitle: 'Breakout', desc: 'Trades volatility expansions during the European open.', category: 'premium', price: 550, image: '', emoji: '🪓' },
+            { id: 38, name: 'Samurai Katana', subtitle: 'Precision', desc: 'Slices through noise to find the perfect entry. ultra low drawdown.', category: 'premium', price: 700, image: '', emoji: '🗾' },
+            { id: 39, name: 'Galactic Profit', subtitle: 'Universal', desc: 'Works on any pair, any timeframe. The ultimate generalist bot.', category: 'premium', price: 900, image: '', emoji: '🌌' },
+            { id: 40, name: 'Nebula Neuro', subtitle: 'Self-Learning', desc: 'Continually retrains itself based on last week\'s market data.', category: 'premium', price: 1200, image: '', emoji: '🧠' }
+        ];
+
+        // Application State
+        let bots = [];
+        let currentCurrency = 'USD';
+        const currencyRates = {
+            'USD': { rate: 1, symbol: '$' },
+            'KES': { rate: 130, symbol: 'KSh ' },
+            'EUR': { rate: 0.92, symbol: '€' },
+            'GBP': { rate: 0.78, symbol: '£' },
+            'ZAR': { rate: 18.5, symbol: 'R ' },
+            'NGN': { rate: 1500, symbol: '₦ ' }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initAdminAuth();
+            initCurrency();
+            loadBotsFromStorage();
+            renderPublicBots();
+            initTheme();
+        });
+
+        // Admin Auth Logic
+        let currentAdminPass = 'password'; // Default
+
+        function initAdminAuth() {
+            const savedPass = localStorage.getItem('algotradex_admin_pass');
+            if (savedPass) {
+                currentAdminPass = savedPass;
+            } else {
+                localStorage.setItem('algotradex_admin_pass', 'password');
+            }
+        }
+
+        function initCurrency() {
+            const saved = localStorage.getItem('algotradex_currency');
+            if (saved && currencyRates[saved]) {
+                currentCurrency = saved;
+            }
+            document.getElementById('currencySelector').value = currentCurrency;
+        }
+
+        function changeCurrency(currency) {
+            currentCurrency = currency;
+            localStorage.setItem('algotradex_currency', currency);
+            renderPublicBots();
+        }
+
+        function formatPrice(priceInUSD) {
+            const currencyData = currencyRates[currentCurrency];
+            const converted = priceInUSD * currencyData.rate;
+            // Format nicely
+            return currencyData.symbol + converted.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        }
+
+        // Theme Logic
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            localStorage.setItem('algotradex_theme', isLight ? 'light' : 'dark');
+            updateThemeIcon(isLight);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('algotradex_theme');
+            const isLight = savedTheme === 'light';
+            if (isLight) {
+                document.body.classList.add('light-theme');
+            }
+            updateThemeIcon(isLight);
+        }
+
+        function updateThemeIcon(isLight) {
+            const icon = document.getElementById('themeIcon');
+            if (isLight) {
+                icon.innerText = '🌑'; // Moon for switching to dark
+            } else {
+                icon.innerText = '☀️'; // Sun for switching to light
+            }
+        }
+
+        function loadBotsFromStorage() {
+            const stored = localStorage.getItem('algotradex_bots');
+            if (stored) {
+                bots = JSON.parse(stored);
+                // Merge default bots that are missing in storage (for demo updates)
+                let added = false;
+                defaultBots.forEach(dBot => {
+                    if (!bots.find(b => b.id === dBot.id)) {
+                        bots.push(dBot);
+                        added = true;
+                    }
+                });
+
+                // Migration: Ensure all bots have a price
+                bots.forEach(bot => {
+                    if (bot.price === undefined) {
+                        bot.price = 100;
+                        added = true;
+                    }
+                });
+
+                if (added) {
+                    saveBotsToStorage();
+                }
+            } else {
+                bots = JSON.parse(JSON.stringify(defaultBots)); // deep copy
+                saveBotsToStorage();
+            }
+        }
+
+        function saveBotsToStorage() {
+            localStorage.setItem('algotradex_bots', JSON.stringify(bots));
+            renderPublicBots();
+            // Check if admin dashboard is visible to avoid errors if element check is simple
+            const adminView = document.getElementById('admin-dashboard-view');
+            if (adminView && adminView.style.display === 'block') {
+                renderAdminBots();
+            }
+        }
+
+        // ---------------------------------------------------------
+        // Public Facing Logic
+        // ---------------------------------------------------------
+
+        function renderPublicBots() {
+            const allContainer = document.getElementById('all-bots-container');
+            const latestContainer = document.getElementById('latest-bots-container');
+            const popularContainer = document.getElementById('popular-bots-container');
+            const premiumContainer = document.getElementById('premium-bots-container');
+            const pineContainer = document.getElementById('pine-bots-container');
+            const eamt4Container = document.getElementById('eamt4-bots-container');
+            const eamt5Container = document.getElementById('eamt5-bots-container');
+
+            allContainer.innerHTML = '';
+            latestContainer.innerHTML = '';
+            popularContainer.innerHTML = '';
+            premiumContainer.innerHTML = '';
+            pineContainer.innerHTML = '';
+            eamt4Container.innerHTML = '';
+            eamt5Container.innerHTML = '';
+
+            bots.forEach(bot => {
+                const botCard = createBotCard(bot);
+
+                // Add to All
+                allContainer.innerHTML += botCard;
+
+                if (bot.category === 'latest') latestContainer.innerHTML += botCard;
+                else if (bot.category === 'popular') popularContainer.innerHTML += botCard;
+                else if (bot.category === 'premium') premiumContainer.innerHTML += botCard;
+                else if (bot.category === 'pine') pineContainer.innerHTML += botCard;
+                else if (bot.category === 'eamt4') eamt4Container.innerHTML += botCard;
+                else if (bot.category === 'eamt5') eamt5Container.innerHTML += botCard;
+            });
+        }
+
+        function createBotCard(bot) {
+            // Handle image rendering: prefer base64 image, fallback to emoji
+            let imageHtml = '';
+            if (bot.image && bot.image.length > 0) {
+                imageHtml = `<img src="${bot.image}" alt="${bot.name}" style="width:100%; height:100%; object-fit:cover;">`;
+            } else {
+                imageHtml = `<span class="placeholder-bot-img">${bot.emoji || '🤖'}</span>`;
+            }
+
+            // Escaping strings for onclick to avoid breaking JS
+            const safeName = bot.name.replace(/'/g, "\\'");
+            const safeSubtitle = bot.subtitle.replace(/'/g, "\\'");
+            const safeDesc = bot.desc.replace(/'/g, "\\'");
+            const safeId = bot.id;
+
+            return `
+            <div class="col-md-6 col-lg-4">
+                <div class="aboutitem" onclick="openBotModal(${safeId})">
+                    <div class="aboutitemImg">
+                        ${imageHtml}
+                    </div>
+                    <div class="bgdarkbluecolor aboutitemcnt">
+                        <div class="itemtitlecode">
+                            <h3 class="textwhitecolor">${bot.name}</h3>
+                            <h4 class="textgraycolor">${bot.subtitle}</h4>
+                        </div>
+                        <div class="itemtitlePrice">
+                            <h3 class="textbluecolor">${formatPrice(bot.price)}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          `;
+        }
+
+        function openBotModal(botId) {
+            const bot = bots.find(b => b.id === botId);
+            if (!bot) return;
+
+            document.getElementById('modalBotName').innerText = bot.name;
+            document.getElementById('modalBotSubtitle').innerText = bot.subtitle;
+            document.getElementById('modalBotDesc').innerText = bot.desc;
+
+            const imgContainer = document.querySelector('.modal-bot-image');
+            if (bot.image && bot.image.length > 0) {
+                imgContainer.innerHTML = `<img src="${bot.image}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">`;
+            } else {
+                imgContainer.innerHTML = `<span style="font-size: 60px;">${bot.emoji || '🤖'}</span>`;
+            }
+
+            // WhatsApp Message Logic
+            const formattedPrice = formatPrice(bot.price);
+            const message = `Hello, I'm Interested to purchase the "${bot.name}, ${bot.subtitle}" going for ${formattedPrice} (${currentCurrency}) on Algotradex.`;
+            const encoded = encodeURIComponent(message);
+            const waLink = `https://wa.me/254759777222?text=${encoded}`;
+            document.getElementById('modalOrderBtn').href = waLink;
+
+            document.getElementById('botModal').style.display = 'block';
+        }
+
+        function closeBotModal() {
+            document.getElementById('botModal').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('botModal')) {
+                closeBotModal();
+            }
+        }
+
+        // ---------------------------------------------------------
+        // Admin Logic
+        // ---------------------------------------------------------
+
+        function showAdminLogin() {
+            document.getElementById('admin-overlay').style.display = 'block';
+            // If already logged in state (mock), just show dashboard
+            // But for now always show login for security simulation
+            document.getElementById('admin-login-form').style.display = 'block';
+            document.getElementById('admin-dashboard-view').style.display = 'none';
+        }
+
+        function hideAdminOverlay() {
+            document.getElementById('admin-overlay').style.display = 'none';
+        }
+
+        function checkAdminLogin() {
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
+
+            if (u === 'admin' && p === currentAdminPass) {
+                document.getElementById('admin-login-form').style.display = 'none';
+                document.getElementById('admin-dashboard-view').style.display = 'block';
+                renderAdminBots();
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        function showChangePasswordForm() {
+            document.getElementById('admin-password-modal').style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('admin-password-modal').style.display = 'none';
+            document.getElementById('oldPass').value = '';
+            document.getElementById('newPass').value = '';
+        }
+
+        function saveNewPassword() {
+            const oldP = document.getElementById('oldPass').value;
+            const newP = document.getElementById('newPass').value;
+
+            if (oldP === currentAdminPass) {
+                if (newP.length < 4) {
+                    alert('Password too short!');
+                    return;
+                }
+                currentAdminPass = newP;
+                localStorage.setItem('algotradex_admin_pass', newP);
+                alert('Password updated successfully!');
+                closePasswordModal();
+            } else {
+                alert('Incorrect old password!');
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+            hideAdminOverlay();
+        }
+
+        // CRUD Operations
+
+        function renderAdminBots() {
+            const tbody = document.getElementById('admin-bot-table-body');
+            tbody.innerHTML = '';
+
+            bots.forEach(bot => {
+                let thumb = '';
+                if (bot.image) {
+                    thumb = `<img src="${bot.image}" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">`;
+                } else {
+                    thumb = `<span style="font-size:24px;">${bot.emoji || '🤖'}</span>`;
+                }
+
+                const row = `
+                <tr>
+                    <td>${thumb}</td>
+                    <td>${bot.name}</td>
+                    <td>$${bot.price}</td>
+                    <td>${bot.category}</td>
+                    <td>${bot.subtitle}</td>
+                    <td>
+                        <button onclick="editBot(${bot.id})" class="btn btn-sm btn-outline-info me-2">Edit</button>
+                        <button onclick="deleteBot(${bot.id})" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </td>
+                </tr>
+              `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function showAddBotForm() {
+            document.getElementById('admin-bot-list-view').style.display = 'none';
+            document.getElementById('admin-bot-form-view').style.display = 'block';
+            document.getElementById('form-title').innerText = 'Add New Bot';
+
+            // Clear form
+            document.getElementById('botId').value = '';
+            document.getElementById('botName').value = '';
+            document.getElementById('botSubtitle').value = '';
+            document.getElementById('botPrice').value = '';
+            document.getElementById('botCategory').value = 'latest';
+            document.getElementById('botDesc').value = '';
+            document.getElementById('botImageInput').value = '';
+            document.getElementById('botImageBase64').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imagePreview').src = '';
+        }
+
+        function editBot(id) {
+            const bot = bots.find(b => b.id === id);
+            if (!bot) return;
+
+            document.getElementById('admin-bot-list-view').style.display = 'none';
+            document.getElementById('admin-bot-form-view').style.display = 'block';
+            document.getElementById('form-title').innerText = 'Edit Bot';
+
+            document.getElementById('botId').value = bot.id;
+            document.getElementById('botName').value = bot.name;
+            document.getElementById('botSubtitle').value = bot.subtitle;
+            document.getElementById('botPrice').value = bot.price;
+            document.getElementById('botCategory').value = bot.category;
+            document.getElementById('botDesc').value = bot.desc;
+
+            document.getElementById('botImageInput').value = ''; // Cannot prefill file input
+            document.getElementById('botImageBase64').value = bot.image || '';
+
+            if (bot.image) {
+                document.getElementById('imagePreview').src = bot.image;
+                document.getElementById('imagePreview').style.display = 'block';
+            } else {
+                document.getElementById('imagePreview').style.display = 'none';
+            }
+        }
+
+        function cancelBotForm() {
+            document.getElementById('admin-bot-form-view').style.display = 'none';
+            document.getElementById('admin-bot-list-view').style.display = 'block';
+        }
+
+        // Convert image to base64
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                    document.getElementById('botImageBase64').value = e.target.result;
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function handleBotSubmit(e) {
+            e.preventDefault();
+
+            const id = document.getElementById('botId').value;
+            const name = document.getElementById('botName').value;
+            const subtitle = document.getElementById('botSubtitle').value;
+            const price = document.getElementById('botPrice').value;
+            const category = document.getElementById('botCategory').value;
+            const desc = document.getElementById('botDesc').value;
+            const image = document.getElementById('botImageBase64').value;
+
+            if (id) {
+                // Update existing
+                const index = bots.findIndex(b => b.id == id);
+                if (index !== -1) {
+                    bots[index] = {
+                        ...bots[index],
+                        name, subtitle, price, category, desc, image
+                    };
+                }
+            } else {
+                // Create new
+                const newId = bots.length > 0 ? Math.max(...bots.map(b => b.id)) + 1 : 1;
+                const newBot = {
+                    id: newId,
+                    name,
+                    subtitle,
+                    desc,
+                    price,
+                    category,
+                    image,
+                    emoji: '🤖' // Default emoji
+                };
+                bots.push(newBot);
+            }
+
+            saveBotsToStorage();
+            cancelBotForm(); // Returns to list
+            renderAdminBots();
+        }
+
+        function deleteBot(id) {
+            if (confirm('Are you sure you want to delete this bot?')) {
+                bots = bots.filter(b => b.id !== id);
+                saveBotsToStorage();
+                renderAdminBots();
+            }
+        }
+    </script>
+</body>
+
+</html>

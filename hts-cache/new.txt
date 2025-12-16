@@ -1,0 +1,3 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+23:31:01	87456/87456	---M-Z	200	added ('OK')	text/html	etag:%22155a0-5d3c9e376a347-gzip%22	https://gorajek.com/projects/nft-crypton/DarkThemeHTML/homestyle1.html	C:/My%20Web%20Sites/AlgoHive/gorajek.com/projects/nft-crypton/DarkThemeHTML/homestyle1.html	(from )
+23:31:04	112/112	---MC-	200	added ('OK')	text/plain	date:Mon,%2015%20Dec%202025%2020:31:02%20GMT	https://gorajek.com/robots.txt		(from )
