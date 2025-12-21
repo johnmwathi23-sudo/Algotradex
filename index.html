@@ -1735,14 +1735,49 @@
             resize();
 
             // Chart State
-            let dataPoints = [];
-            const maxPoints = 100;
+            let candles = [];
+            const maxCandles = 40;
             let currentPrice = 1.2000;
-            let trend = 0;
+
+            // Current open candle state
+            let openPrice = currentPrice;
+            let highPrice = currentPrice;
+            let lowPrice = currentPrice;
+            let tickCount = 0;
+            const ticksPerCandle = 20;
+
+            function generateNextCandle(isInitial = false) {
+                // Determine movement (bias upwards for "profits")
+                const move = (Math.random() - 0.4) * 0.0050; // Slight upward bias (0.1 positive offset)
+                let closePrice = openPrice + move;
+
+                // Update high/low for the finished candle
+                highPrice = Math.max(openPrice, closePrice, highPrice);
+                lowPrice = Math.min(openPrice, closePrice, lowPrice);
+
+                const candle = {
+                    open: openPrice,
+                    close: closePrice,
+                    high: highPrice + (Math.random() * 0.0010), // Add a bit of wick
+                    low: lowPrice - (Math.random() * 0.0010)    // Add a bit of wick
+                };
+
+                candles.push(candle);
+                if (candles.length > maxCandles) {
+                    candles.shift();
+                }
+
+                // Setup next candle
+                currentPrice = closePrice;
+                openPrice = currentPrice;
+                highPrice = currentPrice;
+                lowPrice = currentPrice;
+                tickCount = 0;
+            }
 
             // Initialize with some data
-            for (let i = 0; i < maxPoints; i++) {
-                dataPoints.push(currentPrice);
+            for (let i = 0; i < maxCandles; i++) {
+                generateNextCandle(true);
             }
 
             function draw() {
@@ -1751,10 +1786,12 @@
                 ctx.fillRect(0, 0, width, height);
 
                 // Grid
-                ctx.strokeStyle = '#333';
+                ctx.strokeStyle = '#2a2a2a'; // Subtle grid
                 ctx.lineWidth = 1;
                 ctx.beginPath();
-                for (let x = 0; x < width; x += 50) {
+                const colWidth = width / maxCandles;
+
+                for (let x = 0; x < width; x += colWidth * 5) {
                     ctx.moveTo(x, 0);
                     ctx.lineTo(x, height);
                 }
@@ -1764,49 +1801,122 @@
                 }
                 ctx.stroke();
 
-                // Scales
-                let minPrice = Math.min(...dataPoints);
-                let maxPrice = Math.max(...dataPoints);
-                let range = maxPrice - minPrice;
+                // Find Scale
+                let allPrices = [];
+                candles.forEach(c => allPrices.push(c.high, c.low));
+                // Include current forming candle prices
+                allPrices.push(highPrice, lowPrice, currentPrice);
+
+                let minP = Math.min(...allPrices);
+                let maxP = Math.max(...allPrices);
+                let range = maxP - minP;
                 if (range === 0) range = 0.001;
 
-                const padding = 20;
+                // Add padding
+                const padding = 30;
 
-                // Draw Line
-                ctx.beginPath();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#17BD31';
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = 'rgba(23, 189, 49, 0.5)';
+                const getY = (price) => {
+                    const normalized = (price - minP) / range;
+                    return height - padding - (normalized * (height - 2 * padding));
+                };
 
-                for (let i = 0; i < dataPoints.length; i++) {
-                    const x = (i / (maxPoints - 1)) * width;
-                    const normalized = (dataPoints[i] - minPrice) / range;
-                    const y = height - padding - (normalized * (height - 2 * padding));
+                // Draw Candles
+                const candleWidth = (width / maxCandles) * 0.7;
 
-                    if (i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
+                candles.forEach((c, i) => {
+                    const x = i * (width / maxCandles) + ((width / maxCandles) - candleWidth) / 2;
+                    const yOpen = getY(c.open);
+                    const yClose = getY(c.close);
+                    const yHigh = getY(c.high);
+                    const yLow = getY(c.low);
+
+                    const isBullish = c.close >= c.open;
+
+                    ctx.fillStyle = isBullish ? '#17BD31' : '#ff4d4d'; // Green or Red
+                    ctx.strokeStyle = isBullish ? '#17BD31' : '#ff4d4d';
+
+                    // Wick
+                    ctx.beginPath();
+                    ctx.moveTo(x + candleWidth / 2, yHigh);
+                    ctx.lineTo(x + candleWidth / 2, yLow);
+                    ctx.stroke();
+
+                    // Body
+                    // Ensure height is at least 1px
+                    let bodyHeight = Math.abs(yClose - yOpen);
+                    if (bodyHeight < 1) bodyHeight = 1;
+
+                    ctx.fillRect(
+                        x,
+                        Math.min(yOpen, yClose),
+                        candleWidth,
+                        bodyHeight
+                    );
+                });
+
+                // Draw Current Forming Candle
+                if (tickCount < ticksPerCandle) {
+                    const i = candles.length; // Position at end
+                    const x = i * (width / maxCandles) + ((width / maxCandles) - candleWidth) / 2;
+
+                    // Update current forming candle highs/lows
+                    highPrice = Math.max(highPrice, currentPrice);
+                    lowPrice = Math.min(lowPrice, currentPrice);
+
+                    const yOpen = getY(openPrice);
+                    const yClose = getY(currentPrice);
+                    const yHigh = getY(highPrice);
+                    const yLow = getY(lowPrice);
+
+                    const isBullish = currentPrice >= openPrice;
+
+                    ctx.fillStyle = isBullish ? '#17BD31' : '#ff4d4d';
+                    ctx.strokeStyle = isBullish ? '#17BD31' : '#ff4d4d';
+
+                    // Wick
+                    ctx.beginPath();
+                    ctx.moveTo(x + candleWidth / 2, yHigh);
+                    ctx.lineTo(x + candleWidth / 2, yLow);
+                    ctx.stroke();
+
+                    // Body
+                    let bodyHeight = Math.abs(yClose - yOpen);
+                    if (bodyHeight < 1) bodyHeight = 1;
+
+                    ctx.fillRect(
+                        x,
+                        Math.min(yOpen, yClose),
+                        candleWidth,
+                        bodyHeight
+                    );
+
+                    // Current Price Line
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#fff';
+                    ctx.setLineDash([2, 2]);
+                    ctx.moveTo(0, yClose);
+                    ctx.lineTo(width, yClose);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // Profit Tag
+                    ctx.fillStyle = '#17BD31';
+                    ctx.font = 'bold 12px sans-serif';
+                    ctx.fillText(`+ ${(currentPrice * 100).toFixed(2)}%`, width - 60, yClose - 10);
                 }
-                ctx.stroke();
-                ctx.shadowBlur = 0;
-
-                // Area fill
-                ctx.lineTo(width, height);
-                ctx.lineTo(0, height);
-                ctx.closePath();
-                const gradient = ctx.createLinearGradient(0, 0, 0, height);
-                gradient.addColorStop(0, 'rgba(23, 189, 49, 0.2)');
-                gradient.addColorStop(1, 'rgba(23, 189, 49, 0.0)');
-                ctx.fillStyle = gradient;
-                ctx.fill();
             }
 
             setInterval(() => {
-                const change = (Math.random() - 0.5) * 0.0020;
-                if (Math.random() < 0.02) trend = (Math.random() - 0.5) * 0.5;
-                currentPrice += change + (trend * 0.001);
-                dataPoints.push(currentPrice);
-                if (dataPoints.length > maxPoints) dataPoints.shift();
+                // Update Price for forming candle
+                const noise = (Math.random() - 0.5) * 0.0010;
+                currentPrice += noise;
+
+                // Advance ticks
+                tickCount++;
+                if (tickCount >= ticksPerCandle) {
+                    generateNextCandle();
+                }
+
                 draw();
             }, 50);
         }
